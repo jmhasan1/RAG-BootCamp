@@ -14,4 +14,3 @@ unstructured
 pdfminer
 python-docx
 docx2txt
-
