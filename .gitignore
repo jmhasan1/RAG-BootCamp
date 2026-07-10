@@ -13,3 +13,6 @@ wheels/
 uv.lock
 .python-version
 data
+
+# Ignore environment files
+.env

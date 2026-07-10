@@ -27,3 +27,6 @@ langgraph
 
 # for unstructured excel
 msoffcrypto-tool
+
+# langcain chroma
+langchain-chroma>=0.1.2
