@@ -25,6 +25,10 @@ rank_bm25
 wikipedia
 langgraph
 
+
+# for using create_retrivel_chain(depricated)
+langchain-classic
+
 # for unstructured excel
 msoffcrypto-tool
 
