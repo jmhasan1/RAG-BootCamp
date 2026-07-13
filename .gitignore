@@ -16,3 +16,6 @@ data
 
 # Ignore environment files
 .env
+
+# Vector database files
+chroma_db
