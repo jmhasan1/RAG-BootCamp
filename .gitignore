@@ -19,3 +19,4 @@ data
 
 # Vector database files
 chroma_db
+faiss_index
