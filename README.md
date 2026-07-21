@@ -2,6 +2,7 @@
 ![LangChain](https://img.shields.io/badge/LangChain-LCEL-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
 ![LangGraph](https://img.shields.io/badge/LangGraph-Agentic--AI-FF6F61?style=for-the-badge&logo=langchain&logoColor=white)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-412991?style=for-the-badge&logo=openai&logoColor=white)
+![Hugging Face](https://img.shields.io/badge/Hugging_Face-Transformers-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)
 
 # 🚀 Advanced RAG & Multi-Agent AI Bootcamp
 
