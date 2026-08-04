@@ -26,6 +26,7 @@ rank_bm25
 arxiv
 wikipedia
 langgraph
+langgraph-cli[inmem]
 
 
 # for using create_retrivel_chain(depricated)

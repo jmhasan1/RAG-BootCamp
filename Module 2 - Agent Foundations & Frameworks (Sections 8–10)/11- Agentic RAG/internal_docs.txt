@@ -1,0 +1,78 @@
+======================================================================
+INTERNAL DOCUMENTATION: PROD-VISION-DEFECT-DETECTOR
+LAST UPDATED: 2026-08-04
+MAINTAINER: Manufacturing AI Automation Team
+REPOSITORY: git@github.com:factory-ai-org/prod-vision-defect-detector.git
+======================================================================
+
+1. PROJECT OVERVIEW & SCOPE
+- Purpose: Real-time visual quality control on assembly line 4.
+- Task: Multi-class classification of conveyor belt product components.
+- Classes: [0] pristine, [1] surface_scratch, [2] structural_crack, [3] misaligned.
+- Target KPI: Latency < 35ms per image. F1-score >= 0.98 for 'structural_crack'.
+- Contact: Slack Channel #mfg-ai-vision | PagerDuty Schedule: Team-Vision-OnCall
+
+2. ENVIRONMENT SETUP & DEPENDENCIES
+- Python Version: 3.11.4
+- Core Stack: PyTorch 2.4+, Torchvision 0.19+, OpenCV 4.9, FastAPI 0.110
+- Local Setup Instructions:
+  1. Clone: git clone git@github.com:factory-ai-org/prod-vision-defect-detector.git
+  2. Env: python3 -m venv .venv && source .venv/bin/activate
+  3. Install: pip install -r requirements-dev.txt
+  4. Pre-commit hooks: pre-commit install
+- Hardware Requirements: Local development requires CUDA 12.1 compatible GPU (min 8GB VRAM).
+
+3. DATA PIPELINE & STORAGE ACCESSIBILITY
+- S3 Data Buckets: 
+  - Raw Ingestion: s3://mfg-robotics-raw-imagery-prod/line-4/
+  - Curated Datasets: s3://mfg-ai-vision-datasets/defect-detection-v2.1/
+- Local Sync Command: `python src/data/sync_s3.py --version v2.1`
+- Layout on Disk after Sync:
+  data/
+  ├── train/
+  │   ├── pristine/           (42,000 images)
+  │   └── structural_crack/   (1,200 images - heavy class imbalance)
+  └── val/
+      ├── pristine/           (8,400 images)
+      └── structural_crack/   (240 images)
+
+4. TRAINING INFRASTRUCTURE & ORCHESTRATION
+- Compute: Run on internal DGX-H100 cluster or AWS EC2 g5.2xlarge instances.
+- Run Training Local/Cluster:
+  python src/models/train.py --config configs/resnet50_baseline.yaml
+- Experiment Tracking: Integrated with Weights & Biases (W&B).
+  - Project Workspace: https://wandb.ai
+- Model Artifacts: Weights auto-save to `models/checkpoints/best_model.pt`.
+- Production Registry: AWS S3 `s3://mfg-ai-vision-registry/production/`
+
+5. CODEBASE ARCHITECTURE
+- /configs         # YAML parameter configurations (learning rates, augmentations)
+- /data            # Excluded from git. Sync target via S3 script.
+- /notebooks       # 01_eda.ipynb, 02_error_analysis.ipynb (post-training evaluation)
+- /src             # Core application package
+  - /data          # custom_dataset.py (handles oversampling for minority classes)
+  - /models        # resnet_backbone.py, train_engine.py, loss_functions.py
+  - /deployment    # app.py (FastAPI), triton_config.pbtxt
+- /tests           # Unit tests (pytest) targeting dataset tensors and model input shapes
+
+6. PRODUCTION DEPLOYMENT & SERVING
+- Model Serialization: Scripts compile `best_model.pt` into TorchScript format (`model.pt`).
+- Production Wrapper: Docker container running Triton Inference Server for optimal GPU concurrency.
+- Build Image: `docker build -t defect-detector-api:v2.1 .`
+- Inference Payload Example:
+  - Endpoint: POST http://10.240.12
+  - Input: Form-data containing binary image file.
+  - Return JSON:
+    {
+      "status": "success",
+      "prediction": "structural_crack",
+      "confidence": 0.9942,
+      "inference_time_ms": 14.2
+    }
+
+7. ONBOARDING CHECKLIST FOR NEW RECRUITS
+- [ ] Ask DevOps for access to the `factory-ai-org` GitHub organization.
+- [ ] Request AWS IAM read access for `s3://mfg-ai-vision-datasets/`.
+- [ ] Run through the Environment Setup (Section 2) and verify via `pytest tests/`.
+- [ ] Create a personal account on the internal W&B instance and execute `train.py` with `configs/dummy_test.yaml`.
+- [ ] Review the open engineering tickets on Jira board: project key "MAIV".

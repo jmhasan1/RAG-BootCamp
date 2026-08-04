@@ -1,0 +1,51 @@
+==================================================
+PROJECT TITLE: [e.g., Medical Image Classification / Defect Detection]
+DATE CREATED: [YYYY-MM-DD]
+LAST UPDATED: [YYYY-MM-DD]
+RESEARCHER: [Your Name]
+==================================================
+
+1. CORE OBJECTIVES & TARGET METRICS
+- Primary Task: Multi-class / Binary / Multi-label image classification.
+- Core Goal: [e.g., Classify 10 species of plants from leaf images].
+- Target Metric: [e.g., Achieve >95% Validation Accuracy, F1-Score > 0.92].
+
+2. DATASET SUMMARY
+- Name/Source: [e.g., ImageNet, Kaggle Dataset Link, Custom Scraped Data].
+- Total Images: [Total Count]
+- Class Distribution: [e.g., Balanced (1000 per class) OR Imbalanced (specify ratios)].
+- Resolution/Format: [e.g., 224x224 RGB, PNG format].
+- Splits: Train [X%], Validation [Y%], Test [Z%].
+- Augmentation Strategies: [e.g., Random rotation, horizontal flip, normalization].
+
+3. MODEL ARCHITECTURES EVALUATED
+Model [e.g., ResNet50 / EfficientNetB0 / Custom CNN]
+- Baseline vs. Pre-trained: [e.g., Pre-trained on ImageNet, fine-tuned top layers].
+- Total Parameters: [e.g., 25.6 Million].
+- Source Code/Paper Link: [URL or Git Repo].
+
+4. TRAINING LOGS & HYPERPARAMETERS (Run 01)
+- Model Used: [Model Name]
+- Batch Size: [e.g., 32]
+- Optimizer: [e.g., Adam / SGD] | Learning Rate: [e.g., 1e-4]
+- Loss Function: [e.g., Categorical Cross-Entropy]
+- Epochs: [e.g., 50 with Early Stopping patience=5]
+- Hardware Used: [e.g., NVIDIA RTX 4090 / Google Colab T4 GPU]
+
+5. EXPERIMENT RESULTS & OBSERVATIONS (Run 01)
+- Training Loss/Accuracy: [Value / Value]
+- Validation Loss/Accuracy: [Value / Value]
+- Overfitting Signs: [e.g., Yes, val loss started rising at epoch 15].
+- Confusion Matrix Insights: [e.g., Model frequently confuses Class A with Class C].
+- Action Items for Next Run: [e.g., Increase dropout, add weight decay].
+
+6. LITERATURE REVIEW / REFERENCES
+Source
+- Title: [Paper Title, e.g., "Deep Residual Learning for Image Recognition"]
+- Key Takeaway: [e.g., Used residual connections to solve vanishing gradient in deep networks].
+- Relevance to Project: [e.g., Implementing this exact backbone for feature extraction].
+
+7. DEPLOYMENT & CONSTRAINTS
+- Target Environment: [e.g., Edge device, Cloud API, Web App].
+- Latency Constraint: [e.g., Inference time must be under 50ms per image].
+- Model Optimization: [e.g., Quantization to INT8, ONNX conversion].
